@@ -1,0 +1,9 @@
+{
+  "generator-nodejs-lib": {
+    "projectName": "aws-test-utils",
+    "projectDescription": "Library containing test utilities for AWS specific entities - lambda functions, dynamodb, etc.",
+    "authorName": "Vamshi K Ponnapalli",
+    "authorEmail": "vamshi.ponnapalli@gmail.com",
+    "githubUsername": "vamship"
+  }
+}
