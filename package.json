@@ -1,5 +1,5 @@
 {
-    "name": "aws-test-utils",
+    "name": "@vamship/aws-test-utils",
     "version": "1.0.0",
     "description": "Library containing test utilities for AWS specific entities - lambda functions, dynamodb, etc.",
     "main": "src/index.js",
