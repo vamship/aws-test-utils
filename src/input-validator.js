@@ -44,9 +44,11 @@ class InputValidator {
      *        during tests.
      */
     constructor(wrapper) {
-        _argValidator
-            .checkInstance(wrapper, LambdaTestWrapper)
-            .throw('Invalid test wrapper (arg #1)');
+        _argValidator.checkInstance(
+            wrapper,
+            LambdaTestWrapper,
+            'Invalid test wrapper (arg #1)'
+        );
 
         this._wrapper = wrapper;
     }
@@ -90,9 +92,11 @@ class InputValidator {
      *         outcome of all test cases.
      */
     checkRequiredString(property, tester, extras) {
-        _argValidator.checkString(property).throw('Invalid property (arg #1)');
-        _argValidator.checkFunction(tester).throw('Invalid tester (arg #1)');
-        _argValidator.checkArray(extras).do(() => (extras = []));
+        _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
+        _argValidator.checkFunction(tester, 'Invalid tester (arg #1)');
+        if(!_argValidator.checkArray(extras)) {
+            extras = [];
+        }
 
         const inputs = _testValues.allButString().concat(extras);
         return this._runChecks(property, inputs, tester);
@@ -112,9 +116,11 @@ class InputValidator {
      *         outcome of all test cases.
      */
     checkOptionalString(property, tester, extras) {
-        _argValidator.checkString(property).throw('Invalid property (arg #1)');
-        _argValidator.checkFunction(tester).throw('Invalid tester (arg #1)');
-        _argValidator.checkArray(extras).do(() => (extras = []));
+        _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
+        _argValidator.checkFunction(tester, 'Invalid tester (arg #1)');
+        if(!_argValidator.checkArray(extras)) {
+            extras = [];
+        }
 
         const inputs = _testValues
             .allButSelected('undefined', 'string')
@@ -135,9 +141,11 @@ class InputValidator {
      *         outcome of all test cases.
      */
     checkRequiredNumber(property, tester, extras) {
-        _argValidator.checkString(property).throw('Invalid property (arg #1)');
-        _argValidator.checkFunction(tester).throw('Invalid tester (arg #1)');
-        _argValidator.checkArray(extras).do(() => (extras = []));
+        _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
+        _argValidator.checkFunction(tester, 'Invalid tester (arg #1)');
+        if(!_argValidator.checkArray(extras)) {
+            extras = [];
+        }
 
         const inputs = _testValues.allButNumber().concat(extras);
         return this._runChecks(property, inputs, tester);
@@ -157,9 +165,11 @@ class InputValidator {
      *         outcome of all test cases.
      */
     checkOptionalNumber(property, tester, extras) {
-        _argValidator.checkString(property).throw('Invalid property (arg #1)');
-        _argValidator.checkFunction(tester).throw('Invalid tester (arg #1)');
-        _argValidator.checkArray(extras).do(() => (extras = []));
+        _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
+        _argValidator.checkFunction(tester, 'Invalid tester (arg #1)');
+        if(!_argValidator.checkArray(extras)) {
+            extras = [];
+        }
 
         const inputs = _testValues
             .allButSelected('undefined', 'number')
@@ -180,9 +190,11 @@ class InputValidator {
      *         outcome of all test cases.
      */
     checkRequiredBoolean(property, tester, extras) {
-        _argValidator.checkString(property).throw('Invalid property (arg #1)');
-        _argValidator.checkFunction(tester).throw('Invalid tester (arg #1)');
-        _argValidator.checkArray(extras).do(() => (extras = []));
+        _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
+        _argValidator.checkFunction(tester, 'Invalid tester (arg #1)');
+        if(!_argValidator.checkArray(extras)) {
+            extras = [];
+        }
 
         const inputs = _testValues.allButBoolean().concat(extras);
         return this._runChecks(property, inputs, tester);
@@ -202,9 +214,11 @@ class InputValidator {
      *         outcome of all test cases.
      */
     checkOptionalBoolean(property, tester, extras) {
-        _argValidator.checkString(property).throw('Invalid property (arg #1)');
-        _argValidator.checkFunction(tester).throw('Invalid tester (arg #1)');
-        _argValidator.checkArray(extras).do(() => (extras = []));
+        _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
+        _argValidator.checkFunction(tester, 'Invalid tester (arg #1)');
+        if(!_argValidator.checkArray(extras)) {
+            extras = [];
+        }
 
         const inputs = _testValues
             .allButSelected('undefined', 'boolean')
@@ -225,9 +239,11 @@ class InputValidator {
      *         outcome of all test cases.
      */
     checkRequiredObject(property, tester, extras) {
-        _argValidator.checkString(property).throw('Invalid property (arg #1)');
-        _argValidator.checkFunction(tester).throw('Invalid tester (arg #1)');
-        _argValidator.checkArray(extras).do(() => (extras = []));
+        _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
+        _argValidator.checkFunction(tester, 'Invalid tester (arg #1)');
+        if(!_argValidator.checkArray(extras)) {
+            extras = [];
+        }
 
         const inputs = _testValues.allButObject().concat(extras);
         return this._runChecks(property, inputs, tester);
@@ -247,9 +263,11 @@ class InputValidator {
      *         outcome of all test cases.
      */
     checkOptionalObject(property, tester, extras) {
-        _argValidator.checkString(property).throw('Invalid property (arg #1)');
-        _argValidator.checkFunction(tester).throw('Invalid tester (arg #1)');
-        _argValidator.checkArray(extras).do(() => (extras = []));
+        _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
+        _argValidator.checkFunction(tester, 'Invalid tester (arg #1)');
+        if(!_argValidator.checkArray(extras)) {
+            extras = [];
+        }
 
         const inputs = _testValues
             .allButSelected('undefined', 'object')
@@ -270,9 +288,11 @@ class InputValidator {
      *         outcome of all test cases.
      */
     checkRequiredArray(property, tester, extras) {
-        _argValidator.checkString(property).throw('Invalid property (arg #1)');
-        _argValidator.checkFunction(tester).throw('Invalid tester (arg #1)');
-        _argValidator.checkArray(extras).do(() => (extras = []));
+        _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
+        _argValidator.checkFunction(tester, 'Invalid tester (arg #1)');
+        if(!_argValidator.checkArray(extras)) {
+            extras = [];
+        }
 
         const inputs = _testValues.allButArray().concat(extras);
         return this._runChecks(property, inputs, tester);
@@ -292,9 +312,11 @@ class InputValidator {
      *         outcome of all test cases.
      */
     checkOptionalArray(property, tester, extras) {
-        _argValidator.checkString(property).throw('Invalid property (arg #1)');
-        _argValidator.checkFunction(tester).throw('Invalid tester (arg #1)');
-        _argValidator.checkArray(extras).do(() => (extras = []));
+        _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
+        _argValidator.checkFunction(tester, 'Invalid tester (arg #1)');
+        if(!_argValidator.checkArray(extras)) {
+            extras = [];
+        }
 
         const inputs = _testValues
             .allButSelected('undefined', 'array')

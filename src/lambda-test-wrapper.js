@@ -96,12 +96,18 @@ class LambdaTestWrapper {
      *        configuration data to the lambda function.
      */
     constructor(functionName, handler, event, config) {
-        _argValidator
-            .checkString(functionName)
-            .throw('Invalid functionName (arg #1)');
-        _argValidator.checkFunction(handler).throw('Invalid handler (arg #2)');
-        _argValidator.checkObject(event).do(() => (event = {}));
-        _argValidator.checkObject(config).do(() => (config = {}));
+        _argValidator.checkString(
+            functionName,
+            1,
+            'Invalid functionName (arg #1)'
+        );
+        _argValidator.checkFunction(handler, 'Invalid handler (arg #2)');
+        if (!_argValidator.checkObject(event)) {
+            event = {};
+        }
+        if (!_argValidator.checkObject(config)) {
+            config = {};
+        }
 
         this._functionName = functionName;
         const region = _testValues.getString('region');
@@ -200,7 +206,7 @@ class LambdaTestWrapper {
      *         object chaining.
      */
     setEventProperty(property, value) {
-        _argValidator.checkString(property).throw('Invalid property (arg #1)');
+        _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
         _dotProp.set(this._event, property, value);
 
         return this;
@@ -224,7 +230,7 @@ class LambdaTestWrapper {
      *         object chaining.
      */
     setContextProperty(property, value) {
-        _argValidator.checkString(property).throw('Invalid property (arg #1)');
+        _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
         _dotProp.set(this._context, property, value);
 
         return this;
@@ -242,7 +248,7 @@ class LambdaTestWrapper {
      *         object chaining.
      */
     setConfigProperty(property, value) {
-        _argValidator.checkString(property).throw('Invalid property (arg #1)');
+        _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
         _dotProp.set(this._config, property, value);
 
         return this;
@@ -276,7 +282,7 @@ class LambdaTestWrapper {
      *         object chaining.
      */
     setAlias(alias) {
-        _argValidator.checkString(alias).throw('Invalid alias (arg #1)');
+        _argValidator.checkString(alias, 1, 'Invalid alias (arg #1)');
         this._replaceArnToken(7, alias);
         return this;
     }
@@ -292,7 +298,7 @@ class LambdaTestWrapper {
      *         object chaining.
      */
     setRegion(region) {
-        _argValidator.checkString(region).throw('Invalid region (arg #1)');
+        _argValidator.checkString(region, 1, 'Invalid region (arg #1)');
         this._replaceArnToken(3, region);
         return this;
     }
@@ -308,7 +314,7 @@ class LambdaTestWrapper {
      *         object chaining.
      */
     setAccountId(region) {
-        _argValidator.checkString(region).throw('Invalid accountId (arg #1)');
+        _argValidator.checkString(region, 1, 'Invalid accountId (arg #1)');
         this._replaceArnToken(4, region);
         return this;
     }
