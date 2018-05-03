@@ -94,7 +94,7 @@ class InputValidator {
     checkRequiredString(property, tester, extras) {
         _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
         _argValidator.checkFunction(tester, 'Invalid tester (arg #1)');
-        if(!_argValidator.checkArray(extras)) {
+        if (!_argValidator.checkArray(extras)) {
             extras = [];
         }
 
@@ -118,7 +118,7 @@ class InputValidator {
     checkOptionalString(property, tester, extras) {
         _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
         _argValidator.checkFunction(tester, 'Invalid tester (arg #1)');
-        if(!_argValidator.checkArray(extras)) {
+        if (!_argValidator.checkArray(extras)) {
             extras = [];
         }
 
@@ -143,7 +143,7 @@ class InputValidator {
     checkRequiredNumber(property, tester, extras) {
         _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
         _argValidator.checkFunction(tester, 'Invalid tester (arg #1)');
-        if(!_argValidator.checkArray(extras)) {
+        if (!_argValidator.checkArray(extras)) {
             extras = [];
         }
 
@@ -167,7 +167,7 @@ class InputValidator {
     checkOptionalNumber(property, tester, extras) {
         _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
         _argValidator.checkFunction(tester, 'Invalid tester (arg #1)');
-        if(!_argValidator.checkArray(extras)) {
+        if (!_argValidator.checkArray(extras)) {
             extras = [];
         }
 
@@ -192,7 +192,7 @@ class InputValidator {
     checkRequiredBoolean(property, tester, extras) {
         _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
         _argValidator.checkFunction(tester, 'Invalid tester (arg #1)');
-        if(!_argValidator.checkArray(extras)) {
+        if (!_argValidator.checkArray(extras)) {
             extras = [];
         }
 
@@ -216,7 +216,7 @@ class InputValidator {
     checkOptionalBoolean(property, tester, extras) {
         _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
         _argValidator.checkFunction(tester, 'Invalid tester (arg #1)');
-        if(!_argValidator.checkArray(extras)) {
+        if (!_argValidator.checkArray(extras)) {
             extras = [];
         }
 
@@ -241,7 +241,7 @@ class InputValidator {
     checkRequiredObject(property, tester, extras) {
         _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
         _argValidator.checkFunction(tester, 'Invalid tester (arg #1)');
-        if(!_argValidator.checkArray(extras)) {
+        if (!_argValidator.checkArray(extras)) {
             extras = [];
         }
 
@@ -265,7 +265,7 @@ class InputValidator {
     checkOptionalObject(property, tester, extras) {
         _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
         _argValidator.checkFunction(tester, 'Invalid tester (arg #1)');
-        if(!_argValidator.checkArray(extras)) {
+        if (!_argValidator.checkArray(extras)) {
             extras = [];
         }
 
@@ -290,7 +290,7 @@ class InputValidator {
     checkRequiredArray(property, tester, extras) {
         _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
         _argValidator.checkFunction(tester, 'Invalid tester (arg #1)');
-        if(!_argValidator.checkArray(extras)) {
+        if (!_argValidator.checkArray(extras)) {
             extras = [];
         }
 
@@ -314,7 +314,7 @@ class InputValidator {
     checkOptionalArray(property, tester, extras) {
         _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
         _argValidator.checkFunction(tester, 'Invalid tester (arg #1)');
-        if(!_argValidator.checkArray(extras)) {
+        if (!_argValidator.checkArray(extras)) {
             extras = [];
         }
 
