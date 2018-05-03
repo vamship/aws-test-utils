@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Home - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="InputValidator.html">InputValidator</a><ul class='methods'><li data-type='method'><a href="InputValidator.html#checkOptionalArray">checkOptionalArray</a></li><li data-type='method'><a href="InputValidator.html#checkOptionalBoolean">checkOptionalBoolean</a></li><li data-type='method'><a href="InputValidator.html#checkOptionalNumber">checkOptionalNumber</a></li><li data-type='method'><a href="InputValidator.html#checkOptionalObject">checkOptionalObject</a></li><li data-type='method'><a href="InputValidator.html#checkOptionalString">checkOptionalString</a></li><li data-type='method'><a href="InputValidator.html#checkRequiredArray">checkRequiredArray</a></li><li data-type='method'><a href="InputValidator.html#checkRequiredBoolean">checkRequiredBoolean</a></li><li data-type='method'><a href="InputValidator.html#checkRequiredNumber">checkRequiredNumber</a></li><li data-type='method'><a href="InputValidator.html#checkRequiredObject">checkRequiredObject</a></li><li data-type='method'><a href="InputValidator.html#checkRequiredString">checkRequiredString</a></li></ul></li><li><a href="LambdaTestWrapper.html">LambdaTestWrapper</a><ul class='methods'><li data-type='method'><a href="LambdaTestWrapper.html#clone">clone</a></li><li data-type='method'><a href="LambdaTestWrapper.html#invoke">invoke</a></li><li data-type='method'><a href="LambdaTestWrapper.html#removeAlias">removeAlias</a></li><li data-type='method'><a href="LambdaTestWrapper.html#setAccountId">setAccountId</a></li><li data-type='method'><a href="LambdaTestWrapper.html#setAlias">setAlias</a></li><li data-type='method'><a href="LambdaTestWrapper.html#setConfigProperty">setConfigProperty</a></li><li data-type='method'><a href="LambdaTestWrapper.html#setContextProperty">setContextProperty</a></li><li data-type='method'><a href="LambdaTestWrapper.html#setEventProperty">setEventProperty</a></li><li data-type='method'><a href="LambdaTestWrapper.html#setRegion">setRegion</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+    <section class="readme">
+        <article><h1>aws-test-utils</h1><p><em>Library containing test utilities for AWS specific entities - lambda functions,
+dynamodb, etc. This library is designed to work well with
+<a href="https://github.com/vamshi/aws-lambda">@vamship/aws-lambda</a></em></p>
+<p>This does not include actual test assertions, but provides utility methods that
+can be used to setup commonly used test scenarios.</p>
+<h2>Motivation</h2><p>When unit testing any entity designed to work on an existing platform or
+framework, a significant amount of work is usually necessary to setup the object
+under test. Typically, this involves mocking out components supplied by the
+framework/platform, and providing meaningful values for configuration and
+context objects.</p>
+<p>For example, an AWS Lambda handler is no different than a regular node.js
+function, but requires that the event object and context object be configured
+and passed in for it to work correctly. While this is usually simple, it does
+become repetitive as more and more tests are written against the lambda
+handler.</p>
+<p>Most developers recognize this repeating pattern, and in the spirit of
+<a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">keeping things DRY</a>,
+develop reusable scaffolding that can be used multiple times, without having to
+copy and paste huge chunks of code.</p>
+<p>This library encapsulates components that attempt to do something similar,
+specifically in the context of AWS components. The key idea is to enable the
+development of AWS lambda functions using the framework provided by
+<a href="https://github.com/vamshi/aws-lambda">@vamship/aws-lambda</a>.</p>
+<h2>Installation</h2><p>This library can be installed using npm:</p>
+<pre class="prettyprint source"><code>npm install @vamship/aws-test-utils</code></pre><h2>Usage</h2><h3>Using the library</h3><p>This library is mainly intended for writing test cases, and provides some
+utility classes:</p>
+<h4>LambdaTestWrapper Class:</h4><p>This class is designed to wrap a lambda handler and provide easy methods to
+configure the <code>event</code>, <code>context</code> and <code>extension</code> objects required by the
+handler. While the <code>event</code> and <code>context</code> objects are standard, the extension
+object is injected by the <code>HandlerWrapper</code> class from
+<a href="https://github.com/vamshi/aws-lambda">@vamship/aws-lambda</a>.</p>
+<pre class="prettyprint source"><code>const {LambdaTestWrapper} = require('@vamship/aws-test-utils');
+const handler = require('../../src/handlers/handler');
+
+describe('MyLambda', () => {
+
+...
+    it('should return the sum of two numbers', (done) => {
+        const wrapper = new LambdaTestWrapper('myLambda', handler);
+
+        // You can also set this up via the constructor above.
+        wrapper.setEventProperty('first', 1);
+        wrapper.setEventProperty('second', 2);
+
+        wrapper.invoke().then((result) => {
+            expect(result).to.equal(2);
+        }).then(done, done);
+    });
+
+    it('should access the remote host using config data', (done) => {
+        const wrapper = new LambdaTestWrapper('myLambda', handler);
+        const hostUrl = 'example.com';
+
+        // You can also set this up via the constructor above.
+        wrapper.setConfigProperty('host.url', hostUrl);
+
+        wrapper.invoke().then((result) => {
+            // Write some tests here to see if the handler actually
+            // made a call to hostUrl
+        }).then(done, done);
+    });
+
+...</code></pre><h4>InputValidator Class:</h4><p>This class is designed to work with the <code>LambdaTestWrapper</code> class, generating
+input values for the handler that can be used to test schema validation behavior
+of the lambda function.</p>
+<pre class="prettyprint source"><code>const {LambdaTestWrapper, InputValidator} = require('@vamship/aws-test-utils');
+const handler = require('../../src/handlers/handler');
+
+describe('MyLambda', () => {
+
+...
+    it('should throw an error if the input does not define a user object', (done) => {
+        const wrapper = new LambdaTestWrapper('myLambda', handler);
+        const validator = new InputValidator(wrapper);
+
+        // The callback will be called repeatedly with different values for the
+        // &quot;user&quot; property. Each value will be invalid, which means that the
+        // handler must throw an error every time.
+        validator.checkRequiredObject('user', (wrapper, type, pattern) => {
+            expect(wrapper.invoke).to.throw(type, pattern);
+        }).then(done, done);
+    });
+...</code></pre><h2>Note on Integration</h2><p>It is generally a good practice when developing libraries to have them loosely
+coupled with other libraries, and avoiding tight integration with other
+components. While this library does avoid tight integrations, there are implicit
+assumptions, at least for some of the components, that the library will be used
+with other libraries/frameworks, such as
+<a href="https://github.com/vamshi/aws-lambda">@vamship/aws-lambda</a>.</p>
+<p>While this integration may make this library less applicable to more generic
+usage scenarios, there is still significant reuse value for this library,
+especially given that number of lambda functions that will be developed. Also,
+<a href="https://github.com/vamshi/aws-lambda">@vamship/aws-lambda</a> is actually pretty
+good, so I'd encourage you to give it a go :).</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu May 03 2018 19:55:29 GMT-0400 (EDT) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
