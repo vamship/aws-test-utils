@@ -7,6 +7,10 @@ dynamodb, etc. This library is designed to work well with
 This does not include actual test assertions, but provides utility methods that
 can be used to setup commonly used test scenarios.
 
+## API Documentation
+
+API documentation can be found [here](https://vamship.github.io/aws-test-utils).
+
 ## Motivation
 
 When unit testing any entity designed to work on an existing platform or
