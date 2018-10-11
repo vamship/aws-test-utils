@@ -114,7 +114,7 @@ describe('MyLambda', () => {
         // "user" property. Each value will be invalid, which means that the
         // handler must throw an error every time.
         validator.checkRequiredObject('user', (wrapper, type, pattern) => {
-            expect(wrapper.invoke).to.throw(type, pattern);
+            expect(wrapper.invoke()).to.be.rejectedWith(type, pattern);
         }).then(done, done);
     });
 ...
