@@ -178,13 +178,14 @@ describe('InputValidator', () => {
 
         it('should invoke the handler with the lambda wrapper, error type and message', (done) => {
             const initialWrapper = _createLambdaTestWrapper();
-            const property = `parent.${_testValues.getString('property')}`;
+            const property = _testValues.getString('property');
+            const fullProperty = `parent.${property}`;
             const value = _testValues.getString('property');
-            initialWrapper.setEventProperty(property, value);
+            initialWrapper.setEventProperty(fullProperty, value);
             const validator = _createInputValidator(initialWrapper);
 
             const tester = _sinon.spy();
-            const promise = validator.checkRequiredString(property, tester);
+            const promise = validator.checkRequiredString(fullProperty, tester);
 
             expect(promise)
                 .to.be.fulfilled.then(() => {
@@ -279,13 +280,14 @@ describe('InputValidator', () => {
 
         it('should invoke the handler with the lambda wrapper, error type and message', (done) => {
             const initialWrapper = _createLambdaTestWrapper();
-            const property = `parent.${_testValues.getString('property')}`;
+            const property = _testValues.getString('property');
+            const fullProperty = `parent.${property}`;
             const value = _testValues.getString('property');
-            initialWrapper.setEventProperty(property, value);
+            initialWrapper.setEventProperty(fullProperty, value);
             const validator = _createInputValidator(initialWrapper);
 
             const tester = _sinon.spy();
-            const promise = validator.checkOptionalString(property, tester);
+            const promise = validator.checkOptionalString(fullProperty, tester);
 
             expect(promise)
                 .to.be.fulfilled.then(() => {
@@ -378,13 +380,14 @@ describe('InputValidator', () => {
 
         it('should invoke the handler with the lambda wrapper, error type and message', (done) => {
             const initialWrapper = _createLambdaTestWrapper();
-            const property = `parent.${_testValues.getString('property')}`;
+            const property = _testValues.getString('property');
+            const fullProperty = `parent.${property}`;
             const value = _testValues.getNumber();
-            initialWrapper.setEventProperty(property, value);
+            initialWrapper.setEventProperty(fullProperty, value);
             const validator = _createInputValidator(initialWrapper);
 
             const tester = _sinon.spy();
-            const promise = validator.checkRequiredNumber(property, tester);
+            const promise = validator.checkRequiredNumber(fullProperty, tester);
 
             expect(promise)
                 .to.be.fulfilled.then(() => {
@@ -479,13 +482,14 @@ describe('InputValidator', () => {
 
         it('should invoke the handler with the lambda wrapper, error type and message', (done) => {
             const initialWrapper = _createLambdaTestWrapper();
-            const property = `parent.${_testValues.getString('property')}`;
+            const property = _testValues.getString('property');
+            const fullProperty = `parent.${property}`;
             const value = _testValues.getNumber();
-            initialWrapper.setEventProperty(property, value);
+            initialWrapper.setEventProperty(fullProperty, value);
             const validator = _createInputValidator(initialWrapper);
 
             const tester = _sinon.spy();
-            const promise = validator.checkOptionalNumber(property, tester);
+            const promise = validator.checkOptionalNumber(fullProperty, tester);
 
             expect(promise)
                 .to.be.fulfilled.then(() => {
@@ -578,13 +582,17 @@ describe('InputValidator', () => {
 
         it('should invoke the handler with the lambda wrapper, error type and message', (done) => {
             const initialWrapper = _createLambdaTestWrapper();
-            const property = `parent.${_testValues.getString('property')}`;
+            const property = _testValues.getString('property');
+            const fullProperty = `parent.${property}`;
             const value = !!Math.floor(Math.random() * 2);
-            initialWrapper.setEventProperty(property, value);
+            initialWrapper.setEventProperty(fullProperty, value);
             const validator = _createInputValidator(initialWrapper);
 
             const tester = _sinon.spy();
-            const promise = validator.checkRequiredBoolean(property, tester);
+            const promise = validator.checkRequiredBoolean(
+                fullProperty,
+                tester
+            );
 
             expect(promise)
                 .to.be.fulfilled.then(() => {
@@ -679,13 +687,17 @@ describe('InputValidator', () => {
 
         it('should invoke the handler with the lambda wrapper, error type and message', (done) => {
             const initialWrapper = _createLambdaTestWrapper();
-            const property = `parent.${_testValues.getString('property')}`;
+            const property = _testValues.getString('property');
+            const fullProperty = `parent.${property}`;
             const value = !!Math.floor(Math.random() * 2);
-            initialWrapper.setEventProperty(property, value);
+            initialWrapper.setEventProperty(fullProperty, value);
             const validator = _createInputValidator(initialWrapper);
 
             const tester = _sinon.spy();
-            const promise = validator.checkOptionalBoolean(property, tester);
+            const promise = validator.checkOptionalBoolean(
+                fullProperty,
+                tester
+            );
 
             expect(promise)
                 .to.be.fulfilled.then(() => {
@@ -778,13 +790,14 @@ describe('InputValidator', () => {
 
         it('should invoke the handler with the lambda wrapper, error type and message', (done) => {
             const initialWrapper = _createLambdaTestWrapper();
-            const property = `parent.${_testValues.getString('property')}`;
+            const property = _testValues.getString('property');
+            const fullProperty = `parent.${property}`;
             const value = {};
-            initialWrapper.setEventProperty(property, value);
+            initialWrapper.setEventProperty(fullProperty, value);
             const validator = _createInputValidator(initialWrapper);
 
             const tester = _sinon.spy();
-            const promise = validator.checkRequiredObject(property, tester);
+            const promise = validator.checkRequiredObject(fullProperty, tester);
 
             expect(promise)
                 .to.be.fulfilled.then(() => {
@@ -879,13 +892,14 @@ describe('InputValidator', () => {
 
         it('should invoke the handler with the lambda wrapper, error type and message', (done) => {
             const initialWrapper = _createLambdaTestWrapper();
-            const property = `parent.${_testValues.getString('property')}`;
+            const property = _testValues.getString('property');
+            const fullProperty = `parent.${property}`;
             const value = {};
-            initialWrapper.setEventProperty(property, value);
+            initialWrapper.setEventProperty(fullProperty, value);
             const validator = _createInputValidator(initialWrapper);
 
             const tester = _sinon.spy();
-            const promise = validator.checkOptionalObject(property, tester);
+            const promise = validator.checkOptionalObject(fullProperty, tester);
 
             expect(promise)
                 .to.be.fulfilled.then(() => {
@@ -978,13 +992,14 @@ describe('InputValidator', () => {
 
         it('should invoke the handler with the lambda wrapper, error type and message', (done) => {
             const initialWrapper = _createLambdaTestWrapper();
-            const property = `parent.${_testValues.getString('property')}`;
+            const property = _testValues.getString('property');
+            const fullProperty = `parent.${property}`;
             const value = [];
-            initialWrapper.setEventProperty(property, value);
+            initialWrapper.setEventProperty(fullProperty, value);
             const validator = _createInputValidator(initialWrapper);
 
             const tester = _sinon.spy();
-            const promise = validator.checkRequiredArray(property, tester);
+            const promise = validator.checkRequiredArray(fullProperty, tester);
 
             expect(promise)
                 .to.be.fulfilled.then(() => {
@@ -1079,13 +1094,14 @@ describe('InputValidator', () => {
 
         it('should invoke the handler with the lambda wrapper, error type and message', (done) => {
             const initialWrapper = _createLambdaTestWrapper();
-            const property = `parent.${_testValues.getString('property')}`;
+            const property = _testValues.getString('property');
+            const fullProperty = `parent.${property}`;
             const value = [];
-            initialWrapper.setEventProperty(property, value);
+            initialWrapper.setEventProperty(fullProperty, value);
             const validator = _createInputValidator(initialWrapper);
 
             const tester = _sinon.spy();
-            const promise = validator.checkOptionalArray(property, tester);
+            const promise = validator.checkOptionalArray(fullProperty, tester);
 
             expect(promise)
                 .to.be.fulfilled.then(() => {

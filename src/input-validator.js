@@ -67,8 +67,10 @@ class InputValidator {
      *         outcome of all test cases.
      */
     _runChecks(property, inputs, tester) {
+        const tokens = property.split('.');
+        const propertyName = tokens[tokens.length - 1];
         const message = new RegExp(
-            `Schema validation failed. Details: \\[.*${property}.*\\]`
+            `Schema validation failed. Details: \\[.*${propertyName}.*\\]`
         );
 
         return Promise.map(inputs, (value) => {
