@@ -30,9 +30,9 @@
         "sinon-chai": "^3.3.0"
     },
     "dependencies": {
-        "@vamship/arg-utils": "^2.2.0-1",
-        "@vamship/error-types": "^1.5.0-0",
-        "@vamship/test-utils": "^2.2.0-0",
+        "@vamship/arg-utils": "^2.2.0",
+        "@vamship/error-types": "^1.5.0",
+        "@vamship/test-utils": "^2.2.0",
         "clone": "^2.1.2",
         "dot-prop": "^4.2.0"
     },
