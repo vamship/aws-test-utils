@@ -120,9 +120,7 @@ class LambdaTestWrapper {
             getRemainingTimeInMillis: _sinon.spy(),
             callbackWaitsForEmptyEventLoop: true,
             functionName,
-            invokedFunctionArn: `arn:aws:lambda:${region}:${accountId}:function:${
-                this._functionName
-            }:$LATEST`,
+            invokedFunctionArn: `arn:aws:lambda:${region}:${accountId}:function:${this._functionName}:$LATEST`,
             memoryLimitInMB: 128,
             awsRequestId: _testValues.getString('awsRequestId'),
             logGroupName: `/aws/lambda/${this._functionName}`,
