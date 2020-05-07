@@ -13,7 +13,7 @@ const LOG_METHODS = [
     'error',
     'fatal',
     'silent',
-    'child'
+    'child',
 ];
 const Promise = require('bluebird').Promise;
 const DEFAULT_ALIAS = 'default';
@@ -124,7 +124,7 @@ class LambdaTestWrapper {
             memoryLimitInMB: 128,
             awsRequestId: _testValues.getString('awsRequestId'),
             logGroupName: `/aws/lambda/${this._functionName}`,
-            logStreamName: _testValues.getString('logStreamName')
+            logStreamName: _testValues.getString('logStreamName'),
         };
     }
 
@@ -352,7 +352,7 @@ class LambdaTestWrapper {
                 if (_dotProp.has(data, prop)) {
                     return _dotProp.get(data, prop);
                 }
-            }
+            },
         };
         let alias = this._context.invokedFunctionArn.split(':')[7];
         if (typeof alias === 'undefined' || alias === '$LATEST') {
@@ -363,7 +363,7 @@ class LambdaTestWrapper {
             return this.handler(this._event, this._context, {
                 logger,
                 config,
-                alias
+                alias,
             });
         });
     }

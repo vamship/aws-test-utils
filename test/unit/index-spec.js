@@ -11,7 +11,7 @@ const LambdaTestWrapper = require('../../src/lambda-test-wrapper');
 const InputValidator = require('../../src/input-validator');
 let _index = null;
 
-describe('index', function() {
+describe('index', function () {
     beforeEach(() => {
         _index = _rewire('../../src/index');
     });

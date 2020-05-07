@@ -13,5 +13,5 @@ module.exports = {
     /**
      * Class to perform input tests against a lambda wrapper.
      */
-    InputValidator: require('./input-validator')
+    InputValidator: require('./input-validator'),
 };

@@ -94,9 +94,7 @@ describe('InputValidator', () => {
                 tester.onCall(2).throws(error);
 
                 const promise = invoke(validator, property, tester);
-                expect(promise)
-                    .to.be.rejectedWith(error)
-                    .and.notify(done);
+                expect(promise).to.be.rejectedWith(error).and.notify(done);
             });
 
             it('should resolve the promise if all tester calls complete successfully', (done) => {
@@ -118,9 +116,7 @@ describe('InputValidator', () => {
                 tester.onCall(2).rejects(error);
 
                 const promise = invoke(validator, property, tester);
-                expect(promise)
-                    .to.be.rejectedWith(error)
-                    .and.notify(done);
+                expect(promise).to.be.rejectedWith(error).and.notify(done);
             });
         };
     }

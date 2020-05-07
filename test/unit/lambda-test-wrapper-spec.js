@@ -22,7 +22,7 @@ describe('LambdaTestWrapper', () => {
         'error',
         'fatal',
         'silent',
-        'child'
+        'child',
     ];
     function _createLambdaTestWrapper(functionName, handler, event, config) {
         functionName = functionName || _testValues.getString('functionName');
@@ -51,12 +51,12 @@ describe('LambdaTestWrapper', () => {
                         values: [
                             _testValues.getNumber(),
                             {
-                                foo: _testValues.getString('nestedFoo')
-                            }
-                        ]
-                    }
-                }
-            }
+                                foo: _testValues.getString('nestedFoo'),
+                            },
+                        ],
+                    },
+                },
+            },
         };
     }
 
@@ -534,7 +534,7 @@ describe('LambdaTestWrapper', () => {
             const handler = _sinon.spy();
             const configProps = {
                 'foo.bar': 'baz',
-                'foo.another.level': 2
+                'foo.another.level': 2,
             };
             const wrapper = _createLambdaTestWrapper();
 
@@ -594,9 +594,7 @@ describe('LambdaTestWrapper', () => {
 
             const promise = wrapper.invoke();
 
-            expect(promise)
-                .to.be.rejectedWith(error)
-                .and.notify(done);
+            expect(promise).to.be.rejectedWith(error).and.notify(done);
         });
 
         it('should resolve the promise if the handler completes successfully', (done) => {
@@ -620,9 +618,7 @@ describe('LambdaTestWrapper', () => {
 
             const promise = wrapper.invoke();
 
-            expect(promise)
-                .to.be.rejectedWith(error)
-                .and.notify(done);
+            expect(promise).to.be.rejectedWith(error).and.notify(done);
         });
 
         it('should resolve the promise if the handler returs a resolved promise', (done) => {
