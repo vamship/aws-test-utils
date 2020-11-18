@@ -24,12 +24,11 @@ describe('LambdaTestWrapper', () => {
         'silent',
         'child',
     ];
-    function _createLambdaTestWrapper(functionName, handler, event, config) {
+    function _createLambdaTestWrapper(functionName, handler, event) {
         functionName = functionName || _testValues.getString('functionName');
         handler = handler || _sinon.spy();
         event = event || {};
-        config = config || {};
-        return new LambdaTestWrapper(functionName, handler, event, config);
+        return new LambdaTestWrapper(functionName, handler, event);
     }
 
     function _tokenizeArn(wrapper) {
@@ -98,7 +97,6 @@ describe('LambdaTestWrapper', () => {
             expect(wrapper).to.be.an('object');
             expect(wrapper.functionName).to.equal(functionName);
             expect(wrapper.handler).to.equal(handler);
-            expect(wrapper.config).to.deep.equal({});
             expect(wrapper.event).to.deep.equal({});
 
             const context = wrapper.context;
@@ -124,7 +122,6 @@ describe('LambdaTestWrapper', () => {
 
             expect(wrapper.setEventProperty).to.be.a('function');
             expect(wrapper.setContextProperty).to.be.a('function');
-            expect(wrapper.setConfigProperty).to.be.a('function');
             expect(wrapper.removeAlias).to.be.a('function');
             expect(wrapper.setAlias).to.be.a('function');
             expect(wrapper.setRegion).to.be.a('function');
@@ -142,21 +139,6 @@ describe('LambdaTestWrapper', () => {
 
             expect(wrapper.event).to.deep.equal(event);
             expect(wrapper.event).to.not.equal(event);
-        });
-
-        it('should use the input object to initialize the config if one was specified', () => {
-            const functionName = _testValues.getString('functionName');
-            const handler = _sinon.spy();
-            const config = _generateObject();
-            const wrapper = new LambdaTestWrapper(
-                functionName,
-                handler,
-                undefined,
-                config
-            );
-
-            expect(wrapper.config).to.deep.equal(config);
-            expect(wrapper.config).to.not.equal(config);
         });
     });
 
@@ -244,52 +226,6 @@ describe('LambdaTestWrapper', () => {
 
                 wrapper.setContextProperty(property, value);
                 let target = wrapper.context;
-                tokens.forEach((prop) => {
-                    target = target[prop];
-                });
-                expect(target).to.equal(value);
-            });
-        });
-    });
-
-    describe('setConfigProperty()', () => {
-        it('should throw an error if invoked without a valid property', () => {
-            const message = 'Invalid property (arg #1)';
-            const inputs = _testValues.allButString('');
-
-            inputs.forEach((property) => {
-                const wrapper = () => {
-                    const testWrapper = _createLambdaTestWrapper();
-                    return testWrapper.setConfigProperty(property);
-                };
-
-                expect(wrapper).to.throw(ArgError, message);
-            });
-        });
-
-        it('should return a reference to the wrapper object', () => {
-            const wrapper = _createLambdaTestWrapper();
-
-            const ret = wrapper.setConfigProperty('foo', 'bar');
-
-            expect(ret).to.equal(wrapper);
-        });
-
-        it('should update the config object with the specified values', () => {
-            const inputs = _testValues.allButSelected();
-
-            inputs.forEach((value) => {
-                const depth = Math.floor(Math.random() * 3) + 1;
-                const tokens = [];
-                for (let index = 0; index < depth; index++) {
-                    tokens[index] = _testValues.getString(`prop_${index}`);
-                }
-                const property = tokens.join('.');
-
-                const wrapper = _createLambdaTestWrapper();
-
-                wrapper.setConfigProperty(property, value);
-                let target = wrapper.config;
                 tokens.forEach((prop) => {
                     target = target[prop];
                 });
@@ -475,10 +411,9 @@ describe('LambdaTestWrapper', () => {
             expect(clone).to.be.an.instanceOf(LambdaTestWrapper);
         });
 
-        it('should have identical name, handler, event, context and config properties', () => {
+        it('should have identical name, handler, event and context properties', () => {
             const event = _generateObject();
-            const config = _generateObject();
-            const wrapper = _createLambdaTestWrapper(null, null, event, config);
+            const wrapper = _createLambdaTestWrapper(null, null, event);
             const clone = wrapper.clone();
 
             expect(clone.functionName).to.equal(wrapper.functionName);
@@ -486,9 +421,6 @@ describe('LambdaTestWrapper', () => {
 
             expect(clone.event).to.deep.equal(wrapper.event);
             expect(clone.event).to.not.equal(wrapper.event);
-
-            expect(clone.config).to.deep.equal(wrapper.config);
-            expect(clone.config).to.not.equal(wrapper.config);
         });
     });
 
@@ -518,43 +450,13 @@ describe('LambdaTestWrapper', () => {
 
             expect(ext).to.be.an('object');
 
-            const { logger, config, alias } = ext;
+            const { logger, alias } = ext;
             expect(logger).to.be.an('object');
             LOG_METHODS.forEach((method) => {
                 expect(logger[method]).to.be.a('function');
             });
 
-            expect(config).to.be.an('object');
-            expect(config.get).to.be.a('function');
-
             expect(alias).to.equal(expectedAlias);
-        });
-
-        it('should return config data when the config object is queried', () => {
-            const handler = _sinon.spy();
-            const configProps = {
-                'foo.bar': 'baz',
-                'foo.another.level': 2,
-            };
-            const wrapper = _createLambdaTestWrapper();
-
-            for (let prop in configProps) {
-                let value = configProps[prop];
-                wrapper.setConfigProperty(prop, value);
-            }
-
-            expect(handler).to.not.have.been.called;
-            wrapper.invoke();
-
-            const ext = wrapper.handler.args[0][2];
-            const { config } = ext;
-
-            for (let prop in configProps) {
-                let value = configProps[prop];
-                expect(config.get(prop)).to.equal(value);
-            }
-
-            expect(config.get('bad.prop')).to.be.undefined;
         });
 
         it('should set a default value for the alias if an alias is not defined', () => {

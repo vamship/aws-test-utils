@@ -38,9 +38,6 @@ class LambdaTestWrapper {
      * @param {Object} ext Extended parameters passed to the handler. These
      *        are values injected by the wrapper, providing utility objects
      *        that the handler can optionally utilize.
-     * @param {Object} ext.config A properly scoped configuration object. This
-     *        object contains configuration parameters for a specific
-     *        environment, based on the lambda alias value.
      * @param {Object} ext.logger A logger object that can be used to write log
      *        messages. The logger object is pre initialized with some metadata
      *        that includes the application name, lambda handler name and the
@@ -92,10 +89,8 @@ class LambdaTestWrapper {
      *        test.
      * @param {Object} [event={}] An optional event object that represents the
      *        input to the lambda function.
-     * @param {Object} [config={}] An optional config object that will provide
-     *        configuration data to the lambda function.
      */
-    constructor(functionName, handler, event, config) {
+    constructor(functionName, handler, event) {
         _argValidator.checkString(
             functionName,
             1,
@@ -105,9 +100,6 @@ class LambdaTestWrapper {
         if (!_argValidator.checkObject(event)) {
             event = {};
         }
-        if (!_argValidator.checkObject(config)) {
-            config = {};
-        }
 
         this._functionName = functionName;
         const region = _testValues.getString('region');
@@ -115,7 +107,6 @@ class LambdaTestWrapper {
 
         this._handler = handler;
         this._event = _clone(event);
-        this._config = _clone(config);
         this._context = {
             getRemainingTimeInMillis: _sinon.spy(),
             callbackWaitsForEmptyEventLoop: true,
@@ -159,16 +150,6 @@ class LambdaTestWrapper {
      */
     get handler() {
         return this._handler;
-    }
-
-    /**
-     * The config data that will be sent to the lambda. This will provide the
-     * underlying data to the config object that will be passed to the handler.
-     *
-     * @type {Object}
-     */
-    get config() {
-        return this._config;
     }
 
     /**
@@ -230,24 +211,6 @@ class LambdaTestWrapper {
     setContextProperty(property, value) {
         _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
         _dotProp.set(this._context, property, value);
-
-        return this;
-    }
-
-    /**
-     * Sets a single property on the config data object. This allows the user to
-     * set the lambda configuration prior to invoking the handler.
-     *
-     * @param {String} property The name of the property to set. Dot separated
-     *        values can be used to target nested properties.
-     * @param {*} value The value to assign to the specific property.
-     *
-     * @return {LambdaTestWrapper} A reference to the wrapper object, enabling
-     *         object chaining.
-     */
-    setConfigProperty(property, value) {
-        _argValidator.checkString(property, 1, 'Invalid property (arg #1)');
-        _dotProp.set(this._config, property, value);
 
         return this;
     }
@@ -329,7 +292,6 @@ class LambdaTestWrapper {
             this._functionName,
             this._handler,
             this._event,
-            this._config
         );
     }
 
@@ -346,14 +308,6 @@ class LambdaTestWrapper {
             return result;
         }, new ObjectMock());
 
-        const data = _clone(this._config);
-        const config = {
-            get: (prop) => {
-                if (_dotProp.has(data, prop)) {
-                    return _dotProp.get(data, prop);
-                }
-            },
-        };
         let alias = this._context.invokedFunctionArn.split(':')[7];
         if (typeof alias === 'undefined' || alias === '$LATEST') {
             alias = DEFAULT_ALIAS;
@@ -362,7 +316,6 @@ class LambdaTestWrapper {
         return Promise.try(() => {
             return this.handler(this._event, this._context, {
                 logger,
-                config,
                 alias,
             });
         });
