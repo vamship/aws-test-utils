@@ -291,7 +291,7 @@ class LambdaTestWrapper {
         return new LambdaTestWrapper(
             this._functionName,
             this._handler,
-            this._event,
+            this._event
         );
     }
 
